@@ -16,11 +16,17 @@ def populate():
     Doctors.objects.all().delete()
     Admins.objects.all().delete()
     Timetable.objects.all().delete()
+    Record.objects.all().delete()
+    Booking.objects.all().delete()
 
     # patient number
     pn = 10
     # doctor number
     dn = 3
+    # record number
+    rn = 5
+    # booking number
+    bn = 6
 
     # Patients
     for i in range(1, pn+1):
@@ -54,6 +60,39 @@ def populate():
         admin_psw=1234,
     )
     print("Admins Created! ")
+
+    # Timetable
+    for i in range(1, dn+1):
+        for j in range(1, 5+1):
+            Timetable.objects.create(
+                t_id=(i-1)*5+j,
+                doctor_id=Doctors.objects.get(pk=i),
+                time_id=j,
+            )
+    print("Timetable Created! ")
+
+    # Record
+    for i in range(1, rn):
+        Record.objects.create(
+            record_id=i,
+            patient_id=Patients.objects.get(pk=random.randint(1, pn)),
+            doctor_id=Doctors.objects.get(pk=random.randint(1, dn)),
+            question_context='this is a question_'+str(i),
+            answer_context='here is the answer'+str(i)+' context',
+        )
+    print("Record Created! ")
+
+    # Booking
+    for i in range(1, bn):
+        Booking.objects.create(
+            booking_id=i,
+            patient_id=Patients.objects.get(pk=random.randint(1, pn)),
+            t_id=Timetable.objects.get(pk=random.randint(1, dn*5)),
+        )
+    print("Booking Created! ")
+
+
+
 
 
 
