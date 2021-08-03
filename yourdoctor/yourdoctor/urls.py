@@ -18,9 +18,11 @@ from django.urls import path, include
 
 from  yd_webapp import views
 
+app_name='yd_webapp'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    path('', include('yd_webapp.urls')),
+    path('',views.index,name='index'),
+    path('yd_webapp/',include('yd_webapp.urls')),
 
 ]
