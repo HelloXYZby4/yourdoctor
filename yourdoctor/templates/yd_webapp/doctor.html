@@ -10,16 +10,24 @@
 <form method="post">
     {% csrf_token %}
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="MonMoring" id="1am" name="time">
-      <label class="form-check-label" for="MonMoring">Monday Moring</label>
+      <input class="form-check-input" type="checkbox" value="Monday" id="mon" name="time">
+      <label class="form-check-label" for="Monday">Monday</label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="TueMoring" id="2am" name="time">
-      <label class="form-check-label" for="TurMoring">Tuesday Moring</label>
+      <input class="form-check-input" type="checkbox" value="Tuesday" id="tue" name="time">
+      <label class="form-check-label" for="Tuesday">Tuesday</label>
     </div>
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="WedMoring" id="3am" name="time">
-        <label class="form-check-label" for="WedMoring">Wednesday Moring</label>
+        <input class="form-check-input" type="checkbox" value="Wednesday" id="wed" name="time">
+        <label class="form-check-label" for="Wednesday">Wednesday</label>
+      </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="Thursday" id="thur" name="time">
+        <label class="form-check-label" for="Thursday">Thursday</label>
+      </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="Friday" id="fri" name="time">
+        <label class="form-check-label" for="Friday">Friday</label>
       </div>
     <button type="submit">Submit</button>
     </form>
