@@ -1,0 +1,27 @@
+{% extends 'yd_webapp/userbase.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Account
+{% endblock %}
+
+{% block body_block %}
+
+<div class="card" style="width: 18rem;">
+    <img src="{% static 'icon/hospital.png' %}" class="card-img-top" alt="icon of hospital">
+    <div class="card-body">
+      <h5 class="card-title"> user Name
+          <div><!--
+            {% if user.is_authenticated %}
+            {{user.user.name}}
+            {% else %}
+            hey there partner
+            {%endif%}
+          </div>-->
+        </h5>
+      <p class="card-text">在这里显示用户介绍，属于account内容？</p>
+      <a href="#" class="btn btn-pill btn-success">前往编辑个人信息</a>
+<!--另一个问题是将变化的超链放入该处a tag，理论可行，但是得先完成url的设置-->
+    </div>
+  </div>
+{% endblock %}

@@ -19,4 +19,18 @@ def timetable(request):
 
     return render(request,'yd_webapp/timetable.html',context=context_dict)
 
+def user(request):
+    context_dict={}
 
+    return render(request,'yd_webapp/user.html',context=context_dict)
+
+def doctor(request):
+    timetable=[]
+    if request.method == 'POST':
+        timetable=request.POST.getlist('time')
+        
+
+    context_dict={}
+    context_dict['timetable']=timetable
+
+    return render(request,'yd_webapp/doctor.html',context=context_dict)
