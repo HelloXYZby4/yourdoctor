@@ -1,22 +1,22 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+<h1>homepage</h1>
 
-{% load staticfiles %}
-
-<html>
-
-    <head>
-        <title>Rango</title>
-    </head>
-
-    <body>
-        <h1>Rango says...</h1>
-        <div>
-            hey there partner! <br />
-            <strong>{{ boldmessage }}</strong><br />
-        </div>
-        <div>
-            <a href="/yd_webapp/timetable/">Timetable</a><br />
-        </div>
-    </body>
-
+{% if request.session.is_login %}
+    Welcome！ {{ request.session.username }}!
+    <a href="/yd_webapp/patient/">To the user Account</a>
+    <a href="{% url 'yd_webapp:logout' %}">logout</a>
+    
+{% else %}
+    <a href="{% url 'yd_webapp:login' %}">login</a>
+    <a href="{% url 'yd_webapp:register' %}">sign up</a>
+    <a href="{% url 'yd_webapp:register' %}">DOCTOR sign up</a>
+{% endif %}
+    
+</body>
 </html>

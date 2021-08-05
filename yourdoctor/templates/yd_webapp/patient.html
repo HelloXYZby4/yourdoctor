@@ -10,10 +10,11 @@
 <div class="row">
 <div class="column side">
   <h2>Account</h2>
+  {% if request.session.is_login %}
 <div class="card" style="width: 18rem;">
     <img src="{% static 'icon/hospital.png' %}" class="card-img-top" alt="icon of hospital">
     <div class="card-body">
-      <h5 class="card-title"> user Name
+      <h5 class="card-title"> {{ request.session.username }}
           <div><!--
             {% if user.is_authenticated %}
             {{user.user.name}}
@@ -23,9 +24,14 @@
           </div>-->
         </h5>
       <p class="card-text">在这里显示用户介绍，属于account内容？</p>
+      <a href="{% url 'yd_webapp:logout' %}" class="btn btn-primary">Logout</a>
       
 <!--另一个问题是将变化的超链放入该处a tag，理论可行，但是得先完成url的设置-->
     </div>
+    {% else %}
+    <a href="{% url 'yd_webapp:login' %}">login</a>
+    <a href="{% url 'yd_webapp:register' %}">sign up</a>
+    {% endif %}
   </div>
 </div>
 

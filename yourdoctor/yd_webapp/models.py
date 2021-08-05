@@ -24,7 +24,7 @@ class Patients(models.Model):
         verbose_name_plural = 'Patients'
 
     def __str__(self):
-        return self.patient_id
+        return str(self.patient_id)
 
 
 class Doctors(models.Model):
@@ -34,7 +34,7 @@ class Doctors(models.Model):
     doctor_psw = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.doctor_id
+        return (self.doctor_id)
 
 
 class Admins(models.Model):
@@ -43,7 +43,7 @@ class Admins(models.Model):
     admin_psw = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.admin_id
+        return (self.admin_id)
 
 
 # contains the doctors' available time so that the doctors can choose
