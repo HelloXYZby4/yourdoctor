@@ -18,6 +18,7 @@ from django.urls import path, include
 
 from  yd_webapp import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 

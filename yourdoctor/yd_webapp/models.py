@@ -1,7 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-
+from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 
@@ -14,7 +14,7 @@ class Patients(models.Model):
     patient_phone_num = models.CharField(max_length=20, null=True)
     patient_psw = models.CharField(max_length=50, null=True)
     address = models.CharField(max_length=200, null=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(blank=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.patient_id)

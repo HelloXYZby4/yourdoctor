@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+</head>
+<body>
+     <div style="margin: 15% 20%;">
+        <h1>log to urdoc</h1>
+       <form action="" method="post">{% csrf_token %}
+        <input type="text" id="id_username" name="id" placeholder="id" autofocus required />
+        <input type="text" id="id_username" name="username" placeholder="username" autofocus required />
+        <input type="text" id="id_username" name="email" placeholder="email" autofocus required />
+        <input type="text" id="id_username" name="gender" placeholder="gender" autofocus required />
+        <input type="text" id="id_username" name="phonenumber" placeholder="phonenumber" autofocus required />
+        <input type="text" id="id_username" name="password" placeholder="password" autofocus required />
+        <input type="text" id="id_username" name="address" placeholder="address" autofocus required />
+        <input type="text" id="id_username" name="age" placeholder="age" autofocus required />
+            <button type="submit" >regist</button>
+        </form>
+    </div>
+</body>
+</html>

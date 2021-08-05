@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+<h1>homepage</h1>
+
+{% if user.is_authenticated %}
+    Welcome！ {{ user.username }}!
+    <a href="{% url 'yd_webapp:logout' %}">logout</a>
+    
+{% else %}
+    <a href="{% url 'yd_webapp:login' %}">login</a>
+    <a href="{% url 'yd_webapp:register' %}">sign up</a>
+{% endif %}
+    
+</body>
+</html>

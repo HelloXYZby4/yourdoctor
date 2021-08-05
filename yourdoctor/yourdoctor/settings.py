@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+#AUTH_USER_MODEL = 'yd_webapp.patients'
 # Application definition
 
 INSTALLED_APPS = [
