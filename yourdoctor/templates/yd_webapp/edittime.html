@@ -1,0 +1,51 @@
+{% extends 'yd_webapp/userbase.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Doctor
+{% endblock %}
+
+{% block body_block %}
+
+<form action='/yd_webapp/doctor/' method="post">
+    {% csrf_token %}
+
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=1 id="b1" name="time">
+      <label class="form-check-label" for="MonMoring">Monday</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=2 id="b2" name="time">
+      <label class="form-check-label" for="TurMoring">Tuesday</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=3 id="b3" name="time">
+      <label class="form-check-label" for="WedMoring">Wednesday</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=4 id="b4" name="time">
+      <label class="form-check-label" for="MonMoring">Thursday</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=5 id="b5" name="time">
+      <label class="form-check-label" for="TurMoring">Friday</label>
+    </div>
+
+    <button type="submit">Submit</button>
+    </form>
+
+    <div>
+        <h1>SELECTED TIME</h1>
+    {% if timetable %}
+        <ul>
+        {% for time in timetable%}
+        <li><h4>{{ time }}</h4></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <strong>NO TIME SELECTED</strong>
+    {% endif %}
+    </div>
+
+
+{% endblock %}

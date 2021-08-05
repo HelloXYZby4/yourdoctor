@@ -1,0 +1,39 @@
+.navbar{
+    margin: 10px;
+}
+
+.link.button{
+    background-color: gainsboro;
+  color: rgb(0, 0, 0);
+  padding: 50px 75px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: xx-large;
+}
+.form-check{
+    display: inline-block;
+    margin: 5px;
+
+}
+.column.side{
+    width: 30%;
+    text-align: center;
+}
+
+.column.body{
+    width: 70%;
+    text-align: center;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  @media screen and (max-width: 600px) {
+    .column.side, .column.middle {
+      width: 100%;
+    }
+  }
