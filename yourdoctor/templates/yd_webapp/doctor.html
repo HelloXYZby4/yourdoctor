@@ -2,50 +2,38 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Doctor
+    Account
 {% endblock %}
 
 {% block body_block %}
 
-<form action='/yd_webapp/doctor/' method="post">
-    {% csrf_token %}
+<div class="row">
+<div class="column side">
+  <h2>Account</h2>
+<div class="card" style="width: 18rem;">
+    <img src="{% static 'icon/hospital.png' %}" class="card-img-top" alt="icon of hospital">
+    <div class="card-body">
+      <h5 class="card-title"> user Name
+          <div><!--
+            {% if user.is_authenticated %}
+            {{user.user.name}}
+            {% else %}
+            hey there partner
+            {%endif%}
+          </div>-->
+        </h5>
+      <p class="card-text">在这里显示用户介绍，属于account内容？</p>
+      
+<!--另一个问题是将变化的超链放入该处a tag，理论可行，但是得先完成url的设置-->
+    </div>
+  </div>
+</div>
 
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value=1 id="1" name="time">
-      <label class="form-check-label" for="MonMoring">Monday Moring</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value=2 id="2" name="time">
-      <label class="form-check-label" for="TurMoring">Tuesday Moring</label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" value=3 id="3" name="time">
-        <label class="form-check-label" for="WedMoring">Wednesday Moring</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value=4 id="4" name="time">
-      <label class="form-check-label" for="MonMoring">Thursday Moring</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value=5 id="5" name="time">
-      <label class="form-check-label" for="TurMoring">Friday Moring</label>
-    </div>
+<div class="column body">
+  <h2>Functions</h2>
+  <a href="/yd_webapp/edittime/" class="link button">Edit Timetable</a>
+  <a href="#" class="link button">Reply</a>
+</div>
 
-    <button type="submit">Submit</button>
-    </form>
-
-    <div>
-        <h1>SELECTED TIME</h1>
-    {% if timetable %}
-        <ul>
-        {% for time in timetable%}
-        <li><h4>{{ time }}</h4></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <strong>NO TIME SELECTED</strong>
-    {% endif %}
-    </div>
-
-
+</div>
 {% endblock %}

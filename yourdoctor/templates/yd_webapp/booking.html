@@ -1,21 +1,31 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <title>Hello, world!</title>
-  </head>
+{% extends 'yd_webapp/userbase.html' %}
+{% load staticfiles %}
 
+{% block title_block %}
+    Booking
+{% endblock %}
 
-<body>
-{#    <form action='/yd_webapp/booking/' method="post">#}
-    <form action="{% url 'yd_webapp:booking' %}" method="post">
-    {% csrf_token %}
-    <div>
-        {% for choice in time_choices %}
-        <p><input type="radio" name="availabletime" value={{ choice.time_id }}> Dr.{{ choice.doctor_id.doctor_name }}: {{ choice.get_time_id_display }}</p>
+{% block body_block %}
 
-        {% endfor %}
-    </div>
-    <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
+<form action="{% url 'yd_webapp:booking' %}" method="post">
+  {% csrf_token %}
+<div class="card-group">
+{% for choice in time_choices %}
+<div class="card" style="width: 20rem;">
+  <img src="{% static 'icon/hospital.png' %}" class="card-img-top" alt="icon of hospital">
+  <div class="card-body">
+    <h5 class="card-title"> {{choice.doctor_id.doctor_name}}
+        <div>
+          <p><input type="radio" name="availabletime" value={{ choice.time_id }}> Dr.{{ choice.doctor_id.doctor_name }}: {{ choice.get_time_id_display }}</p>
+        </div>
+      </h5>
+    <p class="card-text">在这里显示用户介绍，属于account内容？</p>
+<!--另一个问题是将变化的超链放入该处a tag，理论可行，但是得先完成url的设置-->
+  </div>
+</div>
+{% endfor %}
+</div>
+<button type="submit">Submit</button>
+</form>
+
+{% endblock %}

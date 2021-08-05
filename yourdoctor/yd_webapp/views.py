@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from yd_webapp import models
 from django.contrib import messages
+from django.contrib.auth.backends import ModelBackend
+from django.db.models.query_utils import Q
+from yd_webapp import models
 
 # Create your views here.
 
@@ -27,135 +30,6 @@ def validate_email(email):
 
 
 # submit registration information
-def register_submit(request):
-    if request.method == 'POST':
-        enter_email = request.POST.get('email', '')
-        enter_name = request.POST.get('name', '')
-        enter_age = request.POST.get('age', '')
-        enter_gender = request.POST.get('gender', '')
-        enter_phone = request.POST.get('phone', '')
-        enter_address = request.POST.get('address', '')
-        enter_password = request.POST.get('password', '')
-        enter_confirm_pwd = request.POST.get('confirm_pwd', '')
-
-        # Determine whether any received data is empty
-        if not enter_email.strip():
-            error_message = "Email can not be empty"
-            return render(request, 'register.html', locals())
-        elif not enter_name.strip():
-            error_message = "Name can not be empty"
-            return render(request, 'register.html', locals())
-        elif not enter_age.strip():
-            error_message = "Age can not be empty"
-            return render(request, 'register.html', locals())
-        elif not enter_gender.strip():
-            error_message = "Gender can not be empty"
-            return render(request, 'register.html', locals())
-        elif not enter_phone.strip():
-            error_message = "Phone number can not be empty"
-            return render(request, 'register.html', locals())
-        elif not enter_address.strip():
-            error_message = "Address can not be empty"
-            return render(request, 'register.html', locals())
-        elif not enter_password.strip():
-            error_message = "Password can not be empty"
-            return render(request, 'register.html', locals())
-        elif not enter_confirm_pwd.strip():
-            error_message = "Confirm password can not be empty"
-            return render(request, 'register.html', locals())
-
-        # Determine email format and password and confirm_password whether same
-        if not validate_email(enter_email):
-            error_message = "Email format is wrong!"
-            return render(request, 'register.html', locals())
-        elif len(enter_password) < 7:
-            error_message = "Password length must not be less than 7 characters!"
-        elif enter_password != enter_confirm_pwd:
-            error_message = "Password and Confirm password are not matching!"
-            return render(request, 'register.html', locals())
-        else:
-            # Determine the entered email whether exists in database
-            same_email = models.Patients.objects.filter(patient_email=enter_email)
-            if same_email:
-                error_message = "Email already exists in our system!"
-                return render(request, 'register.html', locals())
-
-            # Everything is ok and then to create a new customer
-            models.Patients.objects.create(
-                patient_email=enter_email,
-                patient_name=enter_name,
-                patient_age=enter_age,
-                patient_gender=enter_gender,
-                patient_phone_num=enter_phone,
-                address=enter_address,
-                patient_psw=enter_password,
-            )
-
-            return redirect('/longin/')
-    return render(request, 'register.html')
-
-
-# link to the login page
-def login(request):
-    return render(request, 'login.html')
-
-
-# login submit
-def login_submit(request):
-    if request.method == 'POST':
-        print("the POST method from Login Page")
-
-        # Determine whether the parameters are passed to back_end
-        enter_email = request.POST.get('email', '')
-        enter_password = request.POST.get('password', '')
-        enter_role = request.POST.get('role', '')
-        print('email:', enter_email, "\npassword:", enter_password, "\nrole:", enter_role)
-
-        # user role is Patient
-        if enter_role == 'Patient':
-            try:
-                user = models.Patients.objects.get(patient_email=enter_email)
-                if enter_password == user.patient_psw:
-                    # request.session['is_login'] = True
-                    # request.session['user_id'] = user.customer_id
-                    # request.session['user_first_name'] = user.customer_first_name
-                    # request.session['user_last_name'] = user.customer_last_name
-                    # request.session['user_email'] = user.customer_email
-                    # request.session['user_phone'] = user.customer_phone_num
-                    # request.session['user_balance'] = user.balance
-                    return redirect('/homepage/')
-                else:
-                    error_message = "Email and Password are not matching!"
-            except:
-                error_message = "Email is not exist in our system"
-
-        # user role is doctor
-        elif enter_role == 'Doctor':
-            print('doctor log in')
-            try:
-                user = models.Doctors.objects.get(doctor_email=enter_email)
-                if enter_password == user.doctor_email:
-                    request.session['is_login'] = True
-                    print('ok*********')
-                    return redirect('/doctor')
-                else:
-                    error_message = "Email and Password are not matching!"
-            except Exception as e:
-                error_message = e
-
-        # user role is manager
-        elif enter_role == 'Admin':
-            try:
-                user = models.Admins.objects.get(admin_email=enter_email)
-                # if hash_code(enter_password) == user.manager_psw:
-                if enter_password == user.manager_psw:
-                    request.session['is_login'] = True
-                    return redirect('/admins/')
-                else:
-                    error_message = "Email and Password are not matching!"
-            except Exception as e:
-                error_message = e
-    return render(request, 'login.html')
 
 
 # ********************************************************
@@ -237,16 +111,27 @@ def useraccount(request):
     context_dict = {}
 
     if request.method == 'GET':
-        return render(request, 'yd_webapp/user.html', context=context_dict)
+        return render(request, 'yd_webapp/patient.html', context=context_dict)
 
     if request.method == 'POST':
         user = models.Patients.objects.get(patient_id=2)
 
-    return render(request,'yd_webapp/user.html',context=context_dict)
+    return render(request,'yd_webapp/patient.html',context=context_dict)
 
+# get doctor information
+def doctoraccount(request):
+    context_dict = {}
+
+    if request.method == 'GET':
+        return render(request, 'yd_webapp/doctor.html', context=context_dict)
+
+    if request.method == 'POST':
+        user = models.Patients.objects.get(patient_id=2)
+
+    return render(request,'yd_webapp/doctor.html',context=context_dict)
 
 # doctor edits timetable
-def doctor(request):
+def edittime(request):
     if request.method == 'GET':
         context_dict = {}
         times = models.Timetable.objects.filter(doctor_id=2).filter(status=0)
@@ -255,7 +140,7 @@ def doctor(request):
             print(i.time_id)
             timetable.append(i.time_id)
         context_dict['timetable'] = timetable
-        return render(request, 'yd_webapp/doctor.html', context=context_dict)
+        return render(request, 'yd_webapp/edittime.html', context=context_dict)
 
     if request.method == 'POST':
         timetable = request.POST.getlist('time')
@@ -278,6 +163,89 @@ def doctor(request):
         timetable.append(i.time_id)
     context_dict['timetable'] = timetable
 
+    return render(request,'yd_webapp/edittime.html',context=context_dict)
+    pass
+    return render(request,'yd_webapp/index.html')
+
+def user_login(request):
+    if request.method =="POST":
+
+        # username = request.POST.get('id')
+        # password = request.POST.get('password')
+        # user = authenticate(Patients_id=username, patient_psw=password)
+        user=models.Patients.objects.filter(patient_email=request.POST.get('email'),patient_psw=request.POST.get('password'))
+
+
+        if len(list(user)) == 0:
+
+            return render(request,'yd_webapp/login.html',{'Error':'username do not exist'})
+        else:
+            request.session.set_expiry(3000)  #Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
+            # login(request,user)
+            request.session['username']=request.POST.get('email')   #user的值发送给session里的username
+            request.session['is_login']=True   #认证为真
+            # return request.session['is_login']
+
+            # return HttpResponse(request.session['is_login'])
+            # return redirect('yd_webapp:index')
+            return redirect('yd_webapp:index')
+    else:
+        return render(request,'yd_webapp/login.html')
+def doc_login(request):
+    if request.method =="POST":
+
+        # username = request.POST.get('id')
+        # password = request.POST.get('password')
+        # user = authenticate(Patients_id=username, patient_psw=password)
+        user=models.Doctors.objects.filter(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
+
+
+        if len(list(user)) == 0:
+
+            return render(request,'yd_webapp/doclogin.html',{'Error':'username do not exist'})
+        else:
+            request.session.set_expiry(3000)  #Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
+            # login(request,user)
+            request.session['username']=request.POST.get('email')   #user的值发送给session里的username
+            request.session['is_login']=True   #认证为真
+            # return request.session['is_login']
+
+            # return HttpResponse(request.session['is_login'])
+            # return redirect('yd_webapp:index')
+            return redirect('yd_webapp:index')
+    else:
+        return render(request,'yd_webapp/doclogin.html')
+
+def register(request):
+    pass
+    return render(request,'yd_webapp/register.html')
+
+def user_logout(request):
+    request.session.clear()
+    print("1111")
+    return redirect('yd_webapp:index')
+def user_register(request):
+
+    if request.method =="POST":
+        user=models.Patients.objects.filter(patient_id=request.POST.get('id'),patient_psw=request.POST.get('password'))
+        if len(list(user)) == 0:
+            models.Patients.objects.create(
+                patient_id=request.POST.get('id'),
+                patient_name=request.POST.get('username'),
+                patient_email=request.POST.get('email'),
+                patient_gender=request.POST.get('gender'),
+                patient_phone_num=request.POST.get('phonenumber'),
+                patient_psw=request.POST.get('password'),
+                address=request.POST.get('address'),
+                patient_age=request.POST.get('age'),
+
+            )
+            return render(request,'yd_webapp/index.html')
+        else:
+            return HttpResponse("userid does exist")
+    else:
+
+        return render(request,'yd_webapp/register.html')
     return render(request,'yd_webapp/doctor.html',context=context_dict)
 
 

@@ -9,12 +9,13 @@
 
 {% if request.session.is_login %}
     Welcome！ {{ request.session.username }}!
+    <a href="/yd_webapp/patient/">To the user Account</a>
     <a href="{% url 'yd_webapp:logout' %}">logout</a>
     
 {% else %}
-    <a href="{% url 'yd_webapp:login' %}">login</a>
-    <a href="{% url 'yd_webapp:register' %}">sign up</a>
-    <a href="{% url 'yd_webapp:register' %}">DOCTOR sign up</a>
+    <a href="{% url 'yd_webapp:login' %}">Login</a>
+    <a href="{% url 'yd_webapp:register' %}">Sign up</a>
+    <a href="{% url 'yd_webapp:doclogin' %}">Doctor login</a>
 {% endif %}
     
 </body>

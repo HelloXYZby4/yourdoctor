@@ -8,6 +8,11 @@ urlpatterns = [
 
     
     path('', views.index, name='index'),
+    path('timetable/',views.timetable,name='timetable'),
+    path('patient/',views.useraccount,name='user'),
+    path('edittime/',views.edittime,name='edittime'),
+    path('booking/', views.booking, name='booking'),
+    path('doctor/', views.doctoraccount, name='doctor'),
     path('index/', views.index, name='index'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
