@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Hello, world!</title>
+  </head>
+
+
+<body>
+{#    <form action='/yd_webapp/booking/' method="post">#}
+    <form action="{% url 'yd_webapp:booking' %}" method="post">
+    {% csrf_token %}
+    <div>
+        {% for choice in time_choices %}
+        <p><input type="radio" name="availabletime" value={{ choice.time_id }}> Dr.{{ choice.doctor_id.doctor_name }}: {{ choice.get_time_id_display }}</p>
+
+        {% endfor %}
+    </div>
+    <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

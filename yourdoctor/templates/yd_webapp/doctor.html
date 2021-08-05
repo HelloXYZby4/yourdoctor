@@ -7,22 +7,33 @@
 
 {% block body_block %}
 
-<form method="post">
+<form action='/yd_webapp/doctor/' method="post">
     {% csrf_token %}
+
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="MonMoring" id="1am" name="time">
+      <input class="form-check-input" type="checkbox" value=1 id="1" name="time">
       <label class="form-check-label" for="MonMoring">Monday Moring</label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="TueMoring" id="2am" name="time">
+      <input class="form-check-input" type="checkbox" value=2 id="2" name="time">
       <label class="form-check-label" for="TurMoring">Tuesday Moring</label>
     </div>
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="WedMoring" id="3am" name="time">
+        <input class="form-check-input" type="checkbox" value=3 id="3" name="time">
         <label class="form-check-label" for="WedMoring">Wednesday Moring</label>
-      </div>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=4 id="4" name="time">
+      <label class="form-check-label" for="MonMoring">Thursday Moring</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=5 id="5" name="time">
+      <label class="form-check-label" for="TurMoring">Friday Moring</label>
+    </div>
+
     <button type="submit">Submit</button>
     </form>
+
     <div>
         <h1>SELECTED TIME</h1>
     {% if timetable %}

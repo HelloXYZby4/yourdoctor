@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from  yd_webapp import views
+from yd_webapp import views
 
 
 urlpatterns = [
