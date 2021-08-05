@@ -26,8 +26,19 @@ SECRET_KEY = 'iustna%-9wugw2(3-%l)8(6!!a5(rf^t_2e$4lt04u%l21ol1+'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # 引擎
+SESSION_CACHE_ALIAS = 'default'                            # 使用的缓存别名（默认内存缓存，也可以是memcache），此处别名依赖缓存的设置
 
-#AUTH_USER_MODEL = 'yd_webapp.patients'
+
+SESSION_COOKIE_NAME = "sessionid"                        # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串
+SESSION_COOKIE_PATH = "/"                                # Session的cookie保存的路径
+SESSION_COOKIE_DOMAIN = None                              # Session的cookie保存的域名
+SESSION_COOKIE_SECURE = False                             # 是否Https传输cookie
+SESSION_COOKIE_HTTPONLY = True                            # 是否Session的cookie只支持http传输
+SESSION_COOKIE_AGE = 1209600                              # Session的cookie失效日期（2周）
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False                   # 是否关闭浏览器使得Session过期
+SESSION_SAVE_EVERY_REQUEST = False                        # 是否每次请求都保存Session，默认修改之后才保存
+
 # Application definition
 
 INSTALLED_APPS = [

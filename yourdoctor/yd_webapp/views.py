@@ -9,24 +9,6 @@ from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 
-# example:
-
-#class CustomBackend(ModelBackend):
-#
-#
-#    def authenticate(self, request, patient_id=None, patient_psw=None, **kwargs):
-#        try:
-#            # 不希望用户存在两个，get只能有一个。两个是get失败的一种原因 Q为使用并集查询
-#            user = models.Patients.objects.get(Q(patient_id=username))
-#            # django的后台中密码加密：所以不能password==password
-#            # UserProfile继承的AbstractUser中有
-#            def check_password(self,raw_password):
-#                if user.check_password(patient_psw):
-#                    return user
-#        except Exception as e:
-#            return None
-
-
 
 def index(request):
     pass
@@ -34,38 +16,83 @@ def index(request):
 
 def user_login(request):
     if request.method =="POST":
-        username = request.POST.get('id')
-        password = request.POST.get('password')
-        user=models.Patients.objects.filter(patient_id=request.POST.get('id'),patient_psw=request.POST.get('password'))
+
+        # username = request.POST.get('id')
+        # password = request.POST.get('password')
+        # user = authenticate(Patients_id=username, patient_psw=password)    
+        user=models.Patients.objects.filter(patient_email=request.POST.get('email'),patient_psw=request.POST.get('password'))
+        
         
         if len(list(user)) == 0:
+        
             return render(request,'yd_webapp/login.html',{'Error':'username do not exist'})
         else:
-            #login(request,user)
+            request.session.set_expiry(3000)  #Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
+            # login(request,user)
+            request.session['username']=request.POST.get('email')   #user的值发送给session里的username
+            request.session['is_login']=True   #认证为真
+            # return request.session['is_login']
+            
+            # return HttpResponse(request.session['is_login'])
+            # return redirect('yd_webapp:index')
             return redirect('yd_webapp:index')
     else:
         return render(request,'yd_webapp/login.html')
+def doc_login(request):
+    if request.method =="POST":
+
+        # username = request.POST.get('id')
+        # password = request.POST.get('password')
+        # user = authenticate(Patients_id=username, patient_psw=password)    
+        user=models.Patients.objects.filter(doctor_id=request.POST.get('id'),doctor_psw=request.POST.get('password'))
+        
+        
+        if len(list(user)) == 0:
+        
+            return render(request,'yd_webapp/doclogin.html',{'Error':'username do not exist'})
+        else:
+            request.session.set_expiry(3000)  #Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
+            # login(request,user)
+            request.session['username']=request.POST.get('id')   #user的值发送给session里的username
+            request.session['is_login']=True   #认证为真
+            # return request.session['is_login']
+            
+            # return HttpResponse(request.session['is_login'])
+            # return redirect('yd_webapp:index')
+            return redirect('yd_webapp:index')
+    else:
+        return render(request,'yd_webapp/doclogin.html')        
 
 def register(request):
     pass
     return render(request,'yd_webapp/register.html')
 
 def user_logout(request):
-    logout(request)
+    request.session.clear() 
+    print("1111")
     return redirect('yd_webapp:index')
 def user_register(request):
     
-    #查询是否存在用户名
-    models.Patients.objects.create(
-        patient_id=request.POST.get('id'),
-        patient_name=request.POST.get('username'),
-        patient_email=request.POST.get('email'),
-        patient_gender=request.POST.get('gender'),
-        patient_phone_num=request.POST.get('phonenumber'),
-        patient_psw=request.POST.get('password'),
-        address=request.POST.get('address'),
-        patient_age=request.POST.get('age'),
+    if request.method =="POST":
+        user=models.Patients.objects.filter(patient_id=request.POST.get('id'),patient_psw=request.POST.get('password'))
+        if len(list(user)) == 0:
+            models.Patients.objects.create(
+                patient_id=request.POST.get('id'),
+                patient_name=request.POST.get('username'),
+                patient_email=request.POST.get('email'),
+                patient_gender=request.POST.get('gender'),
+                patient_phone_num=request.POST.get('phonenumber'),
+                patient_psw=request.POST.get('password'),
+                address=request.POST.get('address'),
+                patient_age=request.POST.get('age'),
 
-    )
-    print(request.POST)
-    return render(request,'yd_webapp/register.html')
+            )
+            return render(request,'yd_webapp/index.html')
+        else:
+            return HttpResponse("userid does exist")
+    else:
+    
+        return render(request,'yd_webapp/register.html')
+
+
+
