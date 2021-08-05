@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+     <div style="margin: 15% 40%;">
+        <h1>log to urdoc</h1>
+       <form action="" method="post">{% csrf_token %}
+            {{Error}}
+            <p>
+                <label for="id_username">Email：</label>
+                <input type="text" id="id_username" name="email" placeholder="username" autofocus required />
+            </p>
+          
+            <p>
+                <label for="id_password">Password：</label>
+                <input type="password" id="id_password" placeholder="password" name="password" required >
+            </p>
+            <button type="submit" >submit</button>
+        </form>
+    </div>
+</body>
+</html>

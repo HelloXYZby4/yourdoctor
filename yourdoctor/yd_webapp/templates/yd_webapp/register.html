@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+</head>
+<body>
+     <div style="margin: 15% 20%;">
+        <h1>login yourdoctor</h1>
+       <form action="" method="post">{% csrf_token %}
+        <p>id<input type="text" id="id_username" name="id" placeholder="id" autofocus required /></p>
+        <p>username<input type="text" id="id_username" name="username" placeholder="username" autofocus required /></p>
+        <p>email<input type="text" id="id_username" name="email" placeholder="email" autofocus required /></p>
+        <p>gender<input type="text" id="id_username" name="gender" placeholder="gender" autofocus required /></p>
+        <p>phonenumber<input type="text" id="id_username" name="phonenumber" placeholder="phonenumber" autofocus required /></p>
+        <p>password<input type="text" id="id_username" name="password" placeholder="password" autofocus required /></p>
+        <p>address<input type="text" id="id_username" name="address" placeholder="address" autofocus required /></p>
+        <p>age<input type="text" id="id_username" name="age" placeholder="age" autofocus required /></p>
+        <!-- <input type="text" id="id_username" name="id" placeholder="id" autofocus required />
+        <input type="text" id="id_username" name="username" placeholder="username" autofocus required />
+        <input type="text" id="id_username" name="email" placeholder="email" autofocus required />
+        <input type="text" id="id_username" name="gender" placeholder="gender" autofocus required />
+        <input type="text" id="id_username" name="phonenumber" placeholder="phonenumber" autofocus required />
+        <input type="text" id="id_username" name="password" placeholder="password" autofocus required />
+        <input type="text" id="id_username" name="address" placeholder="address" autofocus required />
+        <input type="text" id="id_username" name="age" placeholder="age" autofocus required /> -->
+            <button type="submit" >regist</button>
+        </form>
+    </div>
+</body>
+</html>
