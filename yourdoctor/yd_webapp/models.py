@@ -34,7 +34,7 @@ class Doctors(models.Model):
     doctor_psw = models.CharField(max_length=50)
 
     def __str__(self):
-        return (self.doctor_id)
+        return str(self.doctor_id)
 
 
 class Admins(models.Model):
@@ -43,7 +43,7 @@ class Admins(models.Model):
     admin_psw = models.CharField(max_length=50)
 
     def __str__(self):
-        return (self.admin_id)
+        return str(self.admin_id)
 
 
 # contains the doctors' available time so that the doctors can choose
@@ -67,7 +67,7 @@ class Timetable(models.Model):
     status = models.IntegerField(choices=status_choices, default=0)
 
     def __str__(self):
-        return self.t_id
+        return str(self.t_id)
 
 
 # contains patients' questions and the answers from the doctor

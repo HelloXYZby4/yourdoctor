@@ -7,6 +7,14 @@
 
 {% block body_block %}
 
+     {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{msg.message}}');
+            {% endfor %}
+        </script>
+    {% endif %}
+
 <div class="row">
 <div class="column side">
   <h2>Account</h2>

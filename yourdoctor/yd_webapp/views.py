@@ -48,19 +48,21 @@ def booking(request):
     if request.method == 'POST':
         # availabletime is the t_id in the timetable which is available
         select_t_id = request.POST.get('availabletime')
-        print(select_t_id)
+
         # the time record object that the patient choose
-        select_time = models.Timetable.objects.filter(t_id=int(select_t_id))
-        id = models.Timetable.objects.get(t_id=select_t_id).t_id
-        print(id)
-        print(select_time)
+        select_time = models.Timetable.objects.get(t_id=int(select_t_id))
+        patient = models.Patients.objects.get(patient_id=request.session.get('user_id'))
+
         # updata the timetable after booking
         models.Timetable.objects.filter(t_id=int(select_t_id)).update(status=1)
         models.Booking.objects.create(
-            patient_id=request.session.get('user_id'),
-            t_id=select_time.t_id,
+            patient_id=patient,
+            t_id=select_time,
         )
         print("Booking succeed")
+
+        messages.success(request, 'Your book is accepted! ')
+        return redirect('/yd_webapp/patient/')
 
     context_dict = {}
     context_dict['time_choices'] = models.Timetable.objects.filter(status=0)
@@ -148,8 +150,11 @@ def doctoraccount(request):
 # doctor edits timetable
 def edittime(request):
     if request.method == 'GET':
+        doctor_id = request.session.get('user_id')
+
+
         context_dict = {}
-        times = models.Timetable.objects.filter(doctor_id=2).filter(status=0)
+        times = models.Timetable.objects.filter(doctor_id=doctor_id).filter(status=0)
         timetable = []
         for i in times:
             print(i.time_id)
@@ -189,9 +194,7 @@ def user_login(request):
         # password = request.POST.get('password')
         # user = authenticate(Patients_id=username, patient_psw=password)
         user = models.Patients.objects.get(patient_email=request.POST.get('email'), patient_psw=request.POST.get('password'))
-
         if not user:
-
             return render(request,'yd_webapp/login.html',{'Error':'username do not exist'})
         else:
             request.session.set_expiry(3000)  #Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
@@ -217,21 +220,22 @@ def doc_login(request):
         # username = request.POST.get('id')
         # password = request.POST.get('password')
         # user = authenticate(Patients_id=username, patient_psw=password)
-        user=models.Doctors.objects.filter(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
+        user = models.Doctors.objects.get(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
 
-        if len(list(user)) == 0:
-
+        if not user:
             return render(request,'yd_webapp/doclogin.html',{'Error':'username do not exist'})
         else:
             request.session.set_expiry(3000)  #Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
             # login(request,user)
-            request.session['username']=request.POST.get('email')   #user的值发送给session里的username
+            request.session['username'] = request.POST.get('email')   #user的值发送给session里的username
             request.session['is_login']=True   #认证为真
-            # return request.session['is_login']
+            request.session['user_id'] = user.doctor_id
+            request.session['user_name'] = user.doctor_name  # user的值发送给session里的username
+            request.session['user_email'] = user.doctor_email
 
             # return HttpResponse(request.session['is_login'])
             # return redirect('yd_webapp:index')
-            return redirect('yd_webapp:index')
+            return redirect('yd_webapp:doctor')
     else:
         return render(request,'yd_webapp/doclogin.html')
 
