@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>online_docter</title>
+    <style>
+        div{
+            border-radius: 15px;
+        }
+        .qbox_c1{
+            float: left;
+            margin-top: 70px;
+            margin-left: 40px;
+        }
+        .qbox_c2{
+            margin-top: 25px;
+            color:black;
+            font-size: 25px;
+        }
+        .qbox_c2 button{
+            position: relative;
+            left:50%;
+            margin-top: 50px;
+            margin-left: -60px;
+            width:120px;
+            height: 40px;
+            font-size: 25px;
+        }
+    </style>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div style="width: 1000px;height: 780px;background-color: white;">
+<div>
+    <div><h2>Logo</h2></div>
+    <div style="float: right;position: relative;margin-top: -30px;margin-right: 40px;">Hi,Doctormzm</div>
+    <hr style="height: 4px;">
+</div>
+
+<div>
+    <div style="width: 400px;height:120px;font-size: 40px;line-height: 120px;text-align: center;border: 2px solid black;margin-left: 40px;margin-top: 70px;">Online Doctor</div>
+    <div id="qbox">
+
+    </div>
+</div>
+</div>
+<div id="box-answer" style="display:none;width: 800px;height: 600px;background-color: white;position: fixed;top:50%;left: 50%;margin-top: -300px;margin-left: -400px;">
+    <table>
+        <tr>
+            <td><span>Questions</span></td>
+            <td><textarea id="question_input" readonly="readonly" rows="10" cols="60"></textarea></td>
+        </tr>
+        <tr>
+            <td>Reply</td>
+            <td><textarea id="answer-input" rows="10" cols="60"></textarea></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button id="reply" style="width: 120px;height: 40px;font-size: 25px;">Reply</button></td>
+        </tr>
+    </table>
+</div>
+</body>
+<script>
+    $.ajax({
+        url:"/show_questions/",
+        type:'get',
+        dataType:'json',
+        success:function (res) {
+            console.log(res)
+            for(var i=0;i<res.data.length;i++){
+                var htmlStr='<div class="qbox_c1" style="border:1px solid black;width: 280px;height:280px;background-color: white;">\n' +
+                    '            <div class="qbox_c2">username:'+res.data[i].username+'</div>\n' +
+                    '            <div class="qbox_c2" style="word-break:break-all;">question:'+res.data[i].question+'</div>\n' +
+                    '            <div class="qbox_c2"><button style="background:blue;color:white;" class="btn-answer" data-id="'+res.data[i].records_id+'">Answer</button></div>\n' +
+                    '        </div>\n'
+                $("#qbox").append(htmlStr);
+            }
+            show_box();
+        }
+    })
+    function show_box() {
+        $(".btn-answer").click(function () {
+            $("#box-answer").fadeIn(2000)
+            var records_id = $(this).attr('data-id');
+            var question = $(this).parent().parent().find('div:eq(1)').text().split(":")[1];
+            $("#question_input").val(question);
+            //alert(records_id);
+            //alert(question);
+            $("#reply").click(function () {
+                $.ajax({
+                    url:'/save_answer/',
+                    type:'post',
+                    dataType:'json',
+                    data:{
+                        records_id:records_id,
+                        answer:$("#answer-input").val(),
+                    },
+                    success:function (res) {
+                        alert(res.data);
+                        window.location.reload();
+                    }
+                })
+            })
+        })
+    }
+</script>
+</html>

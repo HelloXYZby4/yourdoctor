@@ -21,8 +21,6 @@ from yd_webapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.index,name='index'),
-    path('yd_webapp/',include('yd_webapp.urls')),
-    #path('user/',views.user,name='user')
-
+    path('', views.index,name='index'),
+    path('yd_webapp/', include('yd_webapp.urls')),
 ]

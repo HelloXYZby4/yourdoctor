@@ -13,9 +13,10 @@
     <a href="{% url 'yd_webapp:logout' %}">logout</a>
     
 {% else %}
-    <a href="{% url 'yd_webapp:login' %}">Login</a>
+    <a href="{% url 'yd_webapp:login' %}">Patient Login</a>
+    <a href="{% url 'yd_webapp:doclogin' %}">Doctor Login</a>
     <a href="{% url 'yd_webapp:register' %}">Sign up</a>
-    <a href="{% url 'yd_webapp:doclogin' %}">Doctor login</a>
+
 {% endif %}
     
 </body>

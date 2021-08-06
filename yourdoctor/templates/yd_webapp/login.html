@@ -5,20 +5,31 @@
     <title>login</title>
 </head>
 <body>
+    {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{msg.message}}');
+            {% endfor %}
+        </script>
+    {% endif %}
      <div style="margin: 15% 40%;">
-        <h1>login Yourdoctor(Doctor)</h1>
+        <h1>Welcome to YourDoctor!</h1>
        <form action="" method="post">{% csrf_token %}
             {{Error}}
             <p>
                 <label for="id_username">Email：</label>
                 <input type="text" id="id_username" name="email" placeholder="username" autofocus required />
             </p>
-          
+
             <p>
                 <label for="id_password">Password：</label>
                 <input type="password" id="id_password" placeholder="password" name="password" required >
             </p>
-            <button type="submit" >submit</button>
+            <button type="submit" >Log In</button>
+
+            <h6> A new patient? Don't worry! Register to our website. </h6>
+            <li><a href="/yd_webapp/register">Register Now</a></li>
+
         </form>
     </div>
 </body>

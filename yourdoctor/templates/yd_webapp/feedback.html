@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>online_docter</title>
+    <style>
+        div{
+            border-radius: 15px;
+        }
+        #qbox{
+            margin-left: 40px;
+            margin-top: 40px;
+        }
+    </style>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div style="width: 1000px;height: 780px;background-color: white;">
+<div>
+    <div><h2>Logo</h2></div>
+{#    <div style="float: right;position: relative;margin-top: -30px;margin-right: 40px;">Hi,Doctormzm</div>#}
+    <hr style="height: 4px;">
+</div>
+
+<div>
+    <div style="width: 400px;height:120px;font-size: 40px;line-height: 120px;text-align: center;border: 2px solid black;margin-left: 40px;margin-top: 70px;">Feedback</div>
+    <div id="qbox">
+        <table>
+            <tr>
+                <td>Question</td>
+                <td><input id="question" style="width:450px;" type="text"></td>
+            </tr>
+            <tr>
+                <td>How you feel?</td>
+                <td><input name="choose" type="radio">Satisfy<input name="choose" type="radio">Good<input name="choose" type="radio">Bad</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><textarea name="" id="content" cols="60" rows="10"></textarea></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button id="pq-btn" style="width: 200px;height: 40px;font-size: 25px;">Submit</button></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+</div>
+</body>
+<script>
+    $("#pq-btn").click(function () {
+        $.ajax({
+            url:'/feedback/',
+            type:'post',
+            dataType:'json',
+            data:{
+                question:$("#question").val(),
+                content:$("#content").val(),
+                feel:$('input:radio[name="choose"]:checked').val()
+            },
+            success:function (res) {
+                alert(res.data);
+                window.location.reload();
+            }
+        })
+    })
+</script>
+</html>

@@ -14,10 +14,10 @@ class Patients(models.Model):
     patient_phone_num = models.CharField(max_length=20, null=True)
     patient_psw = models.CharField(max_length=50, null=True)
     address = models.CharField(max_length=200, null=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField()
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.patient_id)
+        self.slug = slugify(self.patient_name)
         super(Patients, self).save(*args, **kwargs)
 
     class Meta:
