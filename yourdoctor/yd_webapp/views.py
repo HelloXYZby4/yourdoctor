@@ -195,29 +195,32 @@ def edittime(request):
 # patients log in
 def user_login(request):
     if request.method =="POST":
+        enter_email = request.POST.get('email')
+        enter_psw = request.POST.get('password')
+        print(enter_email)
+        print(enter_psw)
 
-        # username = request.POST.get('id')
-        # password = request.POST.get('password')
-        # user = authenticate(Patients_id=username, patient_psw=password)
-        user = models.Patients.objects.get(patient_email=request.POST.get('email'), patient_psw=request.POST.get('password'))
-        user1 = models.Patients.objects.filter(patient_email=request.POST.get('email'), patient_psw=request.POST.get('password'))
-        if len(user1)==0:
-
-            return render(request,'yd_webapp/login.html',{'Error':'username do not exist'})
-        else:
-            user = models.Patients.objects.get(patient_email=request.POST.get('email'), patient_psw=request.POST.get('password'))
-            request.session.set_expiry(3000)  #Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
-            # login(request,user)
-            request.session['is_login'] = True  # 认证为真
-            request.session['user_id'] = user.patient_id
-            request.session['user_name'] = user.patient_name   #user的值发送给session里的username
-            request.session['user_gender'] = user.patient_gender
-            request.session['user_age'] = user.patient_age
-            request.session['user_address'] = user.address
-            request.session['user_email'] = user.patient_email
-            request.session['user_phone'] = user.patient_phone_num
-
-            return redirect('yd_webapp:user')
+        try:
+            user = models.Patients.objects.get(patient_email=enter_email)
+            print(user)
+            if enter_psw == user.patient_psw:
+                request.session.set_expiry(3000)  # Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
+                # login(request,user)
+                request.session['is_login'] = True
+                request.session['user_id'] = user.patient_id
+                request.session['user_name'] = user.patient_name
+                request.session['user_gender'] = user.patient_gender
+                request.session['user_age'] = user.patient_age
+                request.session['user_address'] = user.address
+                request.session['user_email'] = user.patient_email
+                request.session['user_phone'] = user.patient_phone_num
+                return redirect('yd_webapp:user')
+            else:
+                print("password wrong")
+                return render(request,'yd_webapp/login.html', {'Error': 'Error: Please check your password!'})
+        except:
+            print("not exist")
+            return render(request, 'yd_webapp/login.html', {'Error': 'Error: User does not exist in our system'})
     else:
         return render(request,'yd_webapp/login.html')
 
@@ -225,33 +228,31 @@ def user_login(request):
 # doctors log in
 def doc_login(request):
     if request.method =="POST":
+        enter_email = request.POST.get('email')
+        enter_psw = request.POST.get('password')
+        print(enter_email)
+        print(enter_psw)
 
-        # username = request.POST.get('id')
-        # password = request.POST.get('password')
-        # user = authenticate(Patients_id=username, patient_psw=password)
-        user=models.Doctors.objects.get(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
-        user1=models.Doctors.objects.filter(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
-        if len(user1)==0:
-
-            return render(request,'yd_webapp/doclogin.html',{'Error':'username do not exist'})
-        else:
-            user=models.Doctors.objects.get(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
-            request.session.set_expiry(3000)  #Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
-            # login(request,user)
-            request.session['username']=request.POST.get('email')   #user的值发送给session里的username
-            request.session['is_login']=True   #认证为真
-            request.session['user_id'] = user.doctor_id
-            request.session['user_name'] = user.doctor_name   #user的值发送给session里的username
-            
-            request.session['user_email'] = user.doctor_email
-            
-            # return request.session['is_login']
-
-            # return HttpResponse(request.session['is_login'])
-            # return redirect('yd_webapp:index')
-            return redirect('yd_webapp:doctor')
+        try:
+            user = models.Doctors.objects.get(doctor_email=enter_email)
+            print(user)
+            if enter_psw == user.doctor_psw:
+                request.session.set_expiry(3000)  # Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
+                # login(request,user)
+                request.session['username'] = request.POST.get('email')
+                request.session['is_login'] = True
+                request.session['user_id'] = user.doctor_id
+                request.session['user_name'] = user.doctor_name
+                request.session['user_email'] = user.doctor_email
+                return redirect('yd_webapp:doctor')
+            else:
+                print("password wrong")
+                return render(request, 'yd_webapp/doclogin.html', {'Error': 'Error: Please check your password!'})
+        except:
+            print("not exist")
+            return render(request, 'yd_webapp/doclogin.html', {'Error': 'Error: User does not exist in our system'})
     else:
-        return render(request,'yd_webapp/doclogin.html')
+        return render(request, 'yd_webapp/doclogin.html')
 
 
 def user_logout(request):
@@ -303,8 +304,8 @@ def user_register(request):
         if not validate_email(enter_email):
             error_message = "Email format is wrong!"
             return render(request, 'yd_webapp/register.html', locals())
-        elif len(enter_password) < 8:
-            error_message = "Password length must not be less than 8 characters!"
+        elif len(enter_password) < 6:
+            error_message = "Password length must not be less than 6 characters!"
         elif enter_password != enter_confirm_pwd:
             error_message = "Password and Confirm password are not matching!"
             return render(request, 'yd_webapp/register.html', locals())
