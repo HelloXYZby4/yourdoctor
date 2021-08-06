@@ -48,19 +48,19 @@ def booking(request):
     if request.method == 'POST':
         # availabletime is the t_id in the timetable which is available
         select_t_id = request.POST.get('availabletime')
-        print(select_t_id)
+        #print(select_t_id)
         # the time record object that the patient choose
         select_time = models.Timetable.objects.filter(t_id=int(select_t_id))
         id = models.Timetable.objects.get(t_id=select_t_id).t_id
-        print(id)
-        print(select_time)
+        #print(id)
+        #print(select_time)
         # updata the timetable after booking
         models.Timetable.objects.filter(t_id=int(select_t_id)).update(status=1)
         models.Booking.objects.create(
             patient_id=request.session.get('user_id'),
             t_id=select_time.t_id,
         )
-        print("Booking succeed")
+        #print("Booking succeed")
 
     context_dict = {}
     context_dict['time_choices'] = models.Timetable.objects.filter(status=0)
@@ -217,9 +217,9 @@ def doc_login(request):
         # username = request.POST.get('id')
         # password = request.POST.get('password')
         # user = authenticate(Patients_id=username, patient_psw=password)
-        user=models.Doctors.objects.filter(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
+        user=models.Doctors.objects.get(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
 
-        if len(list(user)) == 0:
+        if not user:
 
             return render(request,'yd_webapp/doclogin.html',{'Error':'username do not exist'})
         else:
@@ -227,11 +227,16 @@ def doc_login(request):
             # login(request,user)
             request.session['username']=request.POST.get('email')   #user的值发送给session里的username
             request.session['is_login']=True   #认证为真
+            request.session['user_id'] = user.doctor_id
+            request.session['user_name'] = user.doctor_name   #user的值发送给session里的username
+            
+            request.session['user_email'] = user.doctor_email
+            
             # return request.session['is_login']
 
             # return HttpResponse(request.session['is_login'])
             # return redirect('yd_webapp:index')
-            return redirect('yd_webapp:index')
+            return redirect('yd_webapp:doctor')
     else:
         return render(request,'yd_webapp/doclogin.html')
 

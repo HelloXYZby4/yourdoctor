@@ -11,9 +11,10 @@
 <div class="column side">
   <h2>Account</h2>
 <div class="card" style="width: 18rem;">
-    <img src="{% static 'icon/hospital.png' %}" class="card-img-top" alt="icon of hospital">
+    <img src="{% static 'icon/user.png' %}" class="card-img-top" alt="icon of hospital">
+    <!--<div>Icons made by <a href="" title="Kiranshastry">Kiranshastry</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>-->
     <div class="card-body">
-      <h5 class="card-title"> user Name
+      <h5 class="card-title"> Name: {{ request.session.user_name }}
           <div><!--
             {% if user.is_authenticated %}
             {{user.user.name}}
@@ -22,9 +23,10 @@
             {%endif%}
           </div>-->
         </h5>
-      <p class="card-text">在这里显示用户介绍，属于account内容？</p>
+      <p class="card-text">Hello! Here is introduction part</p>
+      <p class="card-text">Email: {{ request.session.user_email }}</p>
       
-<!--另一个问题是将变化的超链放入该处a tag，理论可行，但是得先完成url的设置-->
+
     </div>
   </div>
 </div>

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>login</title>
+    <link rel="stylesheet" href="{% static "login.css" %}">
 </head>
 <body>
      <div style="margin: 15% 40%;">
         <h1>login Yourdoctor</h1>
+        <h3 class="logindoctor" >login as a Doctor</h3>
        <form action="" method="post">{% csrf_token %}
             {{Error}}
             <p>

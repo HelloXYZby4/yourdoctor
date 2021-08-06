@@ -34,7 +34,7 @@ class Doctors(models.Model):
     doctor_psw = models.CharField(max_length=50)
 
     def __str__(self):
-        return (self.doctor_id)
+        return str(self.doctor_id)
 
 
 class Admins(models.Model):

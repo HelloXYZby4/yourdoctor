@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>login</title>
+    <link rel="stylesheet" href="{% static "login.css" %}">
 </head>
 <body>
     {% if messages %}
@@ -14,6 +16,7 @@
     {% endif %}
      <div style="margin: 15% 40%;">
         <h1>Welcome to YourDoctor!</h1>
+        <h3 class="loginpatient">Login as a Patient</h3>
        <form action="" method="post">{% csrf_token %}
             {{Error}}
             <p>
