@@ -188,12 +188,13 @@ def user_login(request):
         # username = request.POST.get('id')
         # password = request.POST.get('password')
         # user = authenticate(Patients_id=username, patient_psw=password)
-        user = models.Patients.objects.get(patient_email=request.POST.get('email'), patient_psw=request.POST.get('password'))
+        
         user1 = models.Patients.objects.filter(patient_email=request.POST.get('email'), patient_psw=request.POST.get('password'))
-        if list(user1)==0:
+        if len(user1)==0:
 
             return render(request,'yd_webapp/login.html',{'Error':'username do not exist'})
         else:
+            user = models.Patients.objects.get(patient_email=request.POST.get('email'), patient_psw=request.POST.get('password'))
             request.session.set_expiry(3000)  #Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
             # login(request,user)
             request.session['is_login'] = True  # 认证为真
@@ -217,12 +218,13 @@ def doc_login(request):
         # username = request.POST.get('id')
         # password = request.POST.get('password')
         # user = authenticate(Patients_id=username, patient_psw=password)
-        user=models.Doctors.objects.get(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
+        
         user1=models.Doctors.objects.filter(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
-        if list(user1)==0:
+        if len(user1)==0:
 
             return render(request,'yd_webapp/doclogin.html',{'Error':'username do not exist'})
         else:
+            user=models.Doctors.objects.get(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
             request.session.set_expiry(3000)  #Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
             # login(request,user)
             request.session['username']=request.POST.get('email')   #user的值发送给session里的username
