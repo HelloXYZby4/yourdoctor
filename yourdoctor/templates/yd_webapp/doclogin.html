@@ -3,10 +3,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>login</title>
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
     <link rel="stylesheet" href="{% static "login.css" %}">
+    <title>login</title>
 </head>
 <body>
+<div class="text-center">
      <div style="margin: 15% 40%;">
         <h1>login Yourdoctor</h1>
         <h3 class="logindoctor" >login as a Doctor</h3>
@@ -22,7 +24,12 @@
                 <input type="password" id="id_password" placeholder="password" name="password" required >
             </p>
             <button type="submit" >submit</button>
+           <br/>
+           <li><a href="/yd_webapp/" role="button">Homepage</a></li>
         </form>
     </div>
+    </div>
+    <script src="{% static "js1/jquery-3.3.1.min.js" %}" crossorigin="anonymous"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
 </body>
 </html>

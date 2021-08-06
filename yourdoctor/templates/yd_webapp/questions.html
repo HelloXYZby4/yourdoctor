@@ -2,39 +2,22 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
+    
     <title>online_docter</title>
-    <style>
-        div{
-            border-radius: 15px;
-        }
-        #qbox{
-            margin-left: 40px;
-            margin-top: 40px;
-        }
-    </style>
+    
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-<div style="width: 1000px;height: 780px;background-color: white;">
-<div>
-    <div><h2>Logo</h2></div>
-{#    <div style="float: right;position: relative;margin-top: -30px;margin-right: 40px;">Hi,Doctormzm</div>#}
-    <hr style="height: 4px;">
-</div>
 
-    {% if messages %}
-    <script>
-        {% for msg in messages %}
-            alert('{{msg.message}}');
-        {% endfor %}
-    </script>
-    {% endif %}
+<div >
+
 
 <form action='/yd_webapp/message/' method="POST">
+    
      {% csrf_token %}
 <div>
-    <div style="width: 400px;height:120px;font-size: 40px;line-height: 120px;text-align: center;border: 2px solid black;margin-left: 40px;margin-top: 70px;">Question</div>
-    <div id="qbox">
+    <div style="width: 400px;height:120px;font-size: 40px;line-height: 120px;text-align: center;border: 2px solid black;margin-left: 40px;margin-top: 70px;">Message</div>
+    <div style="width: 300px;height:200px;position: fixed;top: 30%;left: 0;right: 0;margin: 0 auto;">
         <table>
             <tr>
                 <td>Your Email:</td>
@@ -54,7 +37,6 @@
 </div>
 </div>
 </form>
-
 
 </body>
 <script>

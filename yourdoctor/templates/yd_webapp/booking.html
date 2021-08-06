@@ -21,13 +21,12 @@
             {% endfor %}
     </div>
 
-
-    <div class="card-group">
+    <div class="container">
+    <div class="card-group" >
     {% for choice in time_choices %}
         <div>
-        <div class="card" style="width: 20rem;">
-            <img src="{% static 'icon/hospital.png' %}" class="card-img-top" alt="icon of hospital">
-            <div class="card-body">
+        <div class="card bg" >
+            <div class="card-body text-center">
                 <h5 class="card-title"> Dr. {{choice.doctor_id.doctor_name}}
                 <div>
                   <p><input type="radio" name="availabletime" value={{ choice.t_id }}> {{ choice.get_time_id_display }}</p>
@@ -39,10 +38,14 @@
 
     {% endfor %}
     </div>
+    </div>
     <br>
+    <div class="text-center">
     <button class="submit-booking" type="submit">Submit</button>
+    </div>
 </form>
-
+<div class="text-center" >
      <a href="/yd_webapp/patient/">Back to the homepage</a>
+    </div>
 {% endblock %}
 
