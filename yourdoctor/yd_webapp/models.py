@@ -74,9 +74,9 @@ class Timetable(models.Model):
 class Record(models.Model):
     record_id = models.AutoField(primary_key=True)
     patient_id = models.ForeignKey('Patients', on_delete=models.CASCADE)
-    doctor_id = models.ForeignKey('Doctors', on_delete=models.CASCADE)
-    question_context = models.CharField(max_length=500, default='')
-    answer_context = models.CharField(max_length=500, default='')
+    doctor_id = models.ForeignKey('Doctors', on_delete=models.CASCADE, null=True)
+    question_context = models.CharField(max_length=500, default='', null=True)
+    answer_context = models.CharField(max_length=500, default='', null=True)
 
 
 # contains the booking details about the patients

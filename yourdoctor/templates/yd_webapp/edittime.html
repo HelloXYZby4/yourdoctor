@@ -7,7 +7,7 @@
 
 {% block body_block %}
 
-<form action='/yd_webapp/doctor/' method="post">
+<form action='/yd_webapp/edittime/' method="POST">
     {% csrf_token %}
 
     <div class="form-check">
@@ -34,7 +34,10 @@
     <button type="submit">Submit</button>
     </form>
 
-    <div class="selected-time">
+
+
+{#    <div class="selected-time">#}
+    <div>
         <h3>SELECTED TIME</h3>
     {% if timetable %}
         <ul>
@@ -46,6 +49,8 @@
         <strong>NO TIME SELECTED</strong>
     {% endif %}
     </div>
+
+     <li><a href="/yd_webapp/doctor">Back to the HomePage</a></li>
 
 
 {% endblock %}

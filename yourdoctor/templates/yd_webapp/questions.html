@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>online_docter</title>
@@ -22,6 +22,16 @@
     <hr style="height: 4px;">
 </div>
 
+    {% if messages %}
+    <script>
+        {% for msg in messages %}
+            alert('{{msg.message}}');
+        {% endfor %}
+    </script>
+    {% endif %}
+
+<form action='/yd_webapp/message/' method="POST">
+     {% csrf_token %}
 <div>
     <div style="width: 400px;height:120px;font-size: 40px;line-height: 120px;text-align: center;border: 2px solid black;margin-left: 40px;margin-top: 70px;">Question</div>
     <div id="qbox">
@@ -43,6 +53,9 @@
     </div>
 </div>
 </div>
+</form>
+
+
 </body>
 <script>
     $("#pq-btn").click(function () {

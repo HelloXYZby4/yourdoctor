@@ -9,6 +9,19 @@
 
 <form action="{% url 'yd_webapp:booking' %}" method="post">
   {% csrf_token %}
+    <div>
+    <h3>
+        Your Appointment:
+    </h3>
+            {% for a in appointment %}
+                <h4>
+                    {{ a.t_id.doctor_id.doctor_name }}
+                    {{ a.t_id.get_time_id_display }}
+                </h4>
+            {% endfor %}
+    </div>
+
+
     <div class="card-group">
     {% for choice in time_choices %}
         <div>
@@ -30,5 +43,6 @@
     <button class="submit-booking" type="submit">Submit</button>
 </form>
 
+     <a href="/yd_webapp/patient/">Back to the homepage</a>
 {% endblock %}
 

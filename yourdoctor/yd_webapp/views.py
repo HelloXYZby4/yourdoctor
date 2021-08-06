@@ -40,8 +40,14 @@ def validate_email(email):
 # user make an appointment
 def booking(request):
     if request.method == 'GET':
+
+        print(request.session.get('user_id'))
+        user = models.Patients.objects.get(patient_id=request.session.get('user_id'))
+        print(user.patient_id)
+
         context_dict = {}
         context_dict['time_choices'] = models.Timetable.objects.filter(status=0)
+        context_dict['appointment'] = models.Booking.objects.filter(patient_id=user)
 
         return render(request, 'yd_webapp/booking.html', context=context_dict)
 
@@ -149,34 +155,36 @@ def doctoraccount(request):
 
 # doctor edits timetable
 def edittime(request):
+    doctor_id = request.session.get('user_id')
+    print("doctor_id:", doctor_id)
+
     if request.method == 'GET':
-        doctor_id = request.session.get('user_id')
-
-
         context_dict = {}
         times = models.Timetable.objects.filter(doctor_id=doctor_id).filter(status=0)
         timetable = []
         for i in times:
-            print(i.time_id)
-            timetable.append(i.time_id)
+            # print(i.time_id)
+            timetable.append(i.get_time_id_display())
         context_dict['timetable'] = timetable
         return render(request, 'yd_webapp/edittime.html', context=context_dict)
 
     if request.method == 'POST':
+
         timetable = request.POST.getlist('time')
         timetable = [int(i) for i in timetable]
         print(timetable)
 
         for i in range(1, 6):
             if i in timetable:
-                models.Timetable.objects.filter(doctor_id=2).filter(time_id=int(i)).update(status=0)
+                models.Timetable.objects.filter(doctor_id=doctor_id).filter(time_id=int(i)).update(status=0)
                 print("updata 0")
             else:
-                models.Timetable.objects.filter(doctor_id=2).filter(time_id=int(i)).update(status=1)
+                models.Timetable.objects.filter(doctor_id=doctor_id).filter(time_id=int(i)).update(status=1)
                 print("updata 1")
 
+
     context_dict={}
-    times = models.Timetable.objects.filter(doctor_id=2).filter(status=0)
+    times = models.Timetable.objects.filter(doctor_id=doctor_id).filter(status=0)
     timetable = []
     for i in times:
         print(i.time_id)
@@ -196,7 +204,7 @@ def user_login(request):
         user = models.Patients.objects.get(patient_email=request.POST.get('email'), patient_psw=request.POST.get('password'))
         user1 = models.Patients.objects.filter(patient_email=request.POST.get('email'), patient_psw=request.POST.get('password'))
 
-        if not user:
+        if list(user1)==0:
             return render(request,'yd_webapp/login.html',{'Error':'username do not exist'})
         else:
             request.session.set_expiry(3000)  #Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
@@ -225,7 +233,7 @@ def doc_login(request):
         user=models.Doctors.objects.get(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
         user1=models.Doctors.objects.filter(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
 
-        if not user:
+        if list(user1)==0:
             return render(request,'yd_webapp/doclogin.html',{'Error':'username do not exist'})
         else:
             request.session.set_expiry(3000)  #Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
@@ -318,7 +326,6 @@ def user_register(request):
                 patient_psw=enter_password,
             )
             messages.success(request, 'Your account created successfully')
-
             return redirect('/yd_webapp/login/')
 
     return render(request, 'yd_webapp/register.html', locals())
@@ -347,7 +354,7 @@ def save_answer(request):
 
 
 #病人提问接口
-# @csrf_exempt
+@csrf_exempt
 def save_question_patient(request):
     if request.method == 'GET':
         return render(request, 'yd_webapp/questions.html')
@@ -360,12 +367,14 @@ def save_question_patient(request):
         user_id = request.session.get('user_id')
         print(user_id)
 
+        patient = models.Patients.objects.get(patient_id=user_id)
+
         models.Record.objects.create(
-            patient_id=models.Patients.objects.get(patient_id=user_id).patient_id,
+            patient_id=patient,
             question_context=question_context,
         )
-
         print("question submit")
+        messages.success(request, 'Your question was submitted! ')
         return render(request, 'yd_webapp/questions.html', locals())
 
     # return JsonResponse({'data': 'submit questions success!', 'code': 200})
