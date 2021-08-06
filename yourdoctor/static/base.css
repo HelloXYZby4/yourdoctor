@@ -14,8 +14,12 @@
 .form-check{
     display: inline-block;
     margin: 5px;
-
 }
+.selected-time{
+  text-align: center;
+  margin: 5px;
+}
+
 .column.side{
     width: 30%;
     text-align: center;

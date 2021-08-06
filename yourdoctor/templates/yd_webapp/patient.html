@@ -20,7 +20,7 @@
   <h2>Account</h2>
   {% if request.session.is_login %}
 <div class="card" style="width: 18rem;">
-    <img src="{% static 'icon/hospital.png' %}" class="card-img-top" alt="icon of hospital">
+    <img src="{% static 'icon/user.png' %}" class="card-img-top" alt="icon of hospital">
     <div class="card-body">
       <h5 class="card-title">Name: {{ request.session.user_name }}
       <h5 class="card-title">Gender: {{ request.session.user_gender }}
@@ -30,7 +30,6 @@
 
       <br/><br/><a href="{% url 'yd_webapp:logout' %}" class="btn btn-primary">Logout</a>
       
-<!--另一个问题是将变化的超链放入该处a tag，理论可行，但是得先完成url的设置-->
     </div>
     {% else %}
     <a href="{% url 'yd_webapp:login' %}">login</a>
@@ -41,8 +40,8 @@
 
 <div class="column body">
   <h2>Functions</h2>
-    <a href="/yd_webapp/booking/" class="link button">Appointment</a>
-    <a href="/yd_webapp/message/" class="link button">Message</a>
+    <a href="{% url 'yd_webapp:booking' %}" class="link button">Appointment</a>
+    <a href="{% url 'yd_webapp:message' %}" class="link button">Message</a>
     <a href="/yd_webapp/feedback_page/" class="link button">Feedback</a>
 </div>
 

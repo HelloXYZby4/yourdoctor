@@ -28,14 +28,14 @@
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value=5 id="b5" name="time">
-      <label class="form-check-label" for="TurMoring">Friday</label>
+      <label class="form-check-label" for="FriMoring">Friday</label>
     </div>
 
     <button type="submit">Submit</button>
     </form>
 
-    <div>
-        <h1>SELECTED TIME</h1>
+    <div class="selected-time">
+        <h3>SELECTED TIME</h3>
     {% if timetable %}
         <ul>
         {% for time in timetable%}

@@ -24,4 +24,5 @@ urlpatterns = [
     path('feedback/', views.feedback, name='feedback'),
     path('feedback_page/', views.feedback_page, name='feedback'),
     path('message/', views.save_question_patient, name='message'),
+    path('onlinedoctor/',views.show_questions_page, name='onlinedoctor')
 ]
