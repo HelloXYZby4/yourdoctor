@@ -1,0 +1,11 @@
+certifi==2021.5.30
+Django==2.1.5
+Faker==8.10.3
+numpy==1.21.1
+olefile==0.46
+Pillow @ file:///C:/ci/pillow_1625663286921/work
+python-dateutil==2.8.2
+pytz @ file:///tmp/build/80754af9/pytz_1612215392582/work
+six==1.16.0
+text-unidecode==1.3
+wincertstore==0.2
