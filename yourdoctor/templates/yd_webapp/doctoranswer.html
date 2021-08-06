@@ -5,31 +5,50 @@
     Online Doctor
 {% endblock %}
 
+{% if messages %}
+<script>
+    {% for msg in messages %}
+        alert('{{msg.message}}');
+    {% endfor %}
+</script>
+{% endif %}
+
 {% block body_block %}
 <form action='/yd_webapp/onlinedoctor/' method="POST">
+ {% csrf_token %}
+
 <div class="accordion" id="accordionExample">
-{% for %}
+{% for q in questions%}
     <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            这里显示patient的name
-          </button>
-        </h2>
+        <h5 class="accordion-header" id="headingOne">
+            Question {{ q.record_id }}: from Patient {{ q.patient_id.patient_name }}
+        </h5>
         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <strong>显示id</strong>
-            这里显示问的问题
+              {{ q.question_context }}
           </div>
         </div>
+    <br/>
       </div>
 {% endfor %}
 </div>
-<form class="form-inline" role="form" action='/yd_webapp/onlinedoctor/' method="POST">
-<div>
-    <input type="text" class="input-id" id="inputid" placeholder="Please input selected question ID">
-    <input type="text" class="input-answer" id="inputanswer" placeholder="Type in your answer">
 
+<br/><br/><br/>
+<form class="form-inline" role="form" action='/yd_webapp/onlinedoctor/' method="POST">
+ {% csrf_token %}
+    <div>
+    <h4>
+        Answer Questions:
+    </h4>
+    Please input the Question Number that your will reply to:
+    <input type="text" class="input-id" name='question_id' id="inputid" placeholder="">
+    <br/><br/><br/>
+    Please answer this question here:
+    <input type="text" class="input-answer" name='answer' id="inputanswer" placeholder="Your answer">
+    <br/><br/><br/>
 <button type="submit">Submit</button>
 </div>
 </form>
+<br/>
+<li><a href="/yd_webapp/doctor">Back to the HomePage</a></li>
 {% endblock %}

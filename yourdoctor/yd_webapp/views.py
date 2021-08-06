@@ -164,7 +164,7 @@ def edittime(request):
         timetable = []
         for i in times:
             # print(i.time_id)
-            timetable.append(i.get_time_id_display())
+            timetable.append(i.get_time_id_display)
         context_dict['timetable'] = timetable
         return render(request, 'yd_webapp/edittime.html', context=context_dict)
 
@@ -186,7 +186,7 @@ def edittime(request):
     timetable = []
     for i in times:
         print(i.time_id)
-        timetable.append(i.time_id)
+        timetable.append(i.get_time_id_display)
     context_dict['timetable'] = timetable
 
     return render(request,'yd_webapp/edittime.html',context=context_dict)
@@ -213,7 +213,7 @@ def user_login(request):
             request.session['user_name'] = user.patient_name   #user的值发送给session里的username
             request.session['user_gender'] = user.patient_gender
             request.session['user_age'] = user.patient_age
-            request.session['user_adderess'] = user.address
+            request.session['user_address'] = user.address
             request.session['user_email'] = user.patient_email
             request.session['user_phone'] = user.patient_phone_num
 
@@ -402,6 +402,34 @@ def feedback_page(request):
     return render(request, 'yd_webapp/feedback.html')
 
 
-def answer_question():
-    pass
+@csrf_exempt
+def answer_question(request):
+    context_dict = {}
+
+    if request.method == 'GET':
+        context_dict['questions'] = models.Record.objects.filter(doctor_id=None)
+        print(context_dict)
+        return render(request, 'yd_webapp/doctoranswer.html', context=context_dict)
+
+    if request.method == 'POST':
+        doctor_id = request.session.get('user_id')
+        print(doctor_id)
+
+        enter_question_id = request.POST.get('question_id')
+        enter_answer = request.POST.get('answer')
+        print(enter_answer)
+
+        models.Record.objects.filter(record_id=enter_question_id).update(
+            answer_context=enter_answer,
+            doctor_id=doctor_id,
+        )
+
+        # messages.success(request, 'Your answer was submitted! ')
+        print("update record answer question")
+        # return render(request, 'yd_webapp/doctoranswer.html', locals())
+
+    context_dict['questions'] = models.Record.objects.filter(doctor_id=None)
+    print(context_dict)
+    return render(request, 'yd_webapp/doctoranswer.html', context=context_dict)
+
 
