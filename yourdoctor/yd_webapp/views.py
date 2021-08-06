@@ -169,7 +169,6 @@ def edittime(request):
         return render(request, 'yd_webapp/edittime.html', context=context_dict)
 
     if request.method == 'POST':
-
         timetable = request.POST.getlist('time')
         timetable = [int(i) for i in timetable]
         print(timetable)
@@ -181,7 +180,6 @@ def edittime(request):
             else:
                 models.Timetable.objects.filter(doctor_id=doctor_id).filter(time_id=int(i)).update(status=1)
                 print("updata 1")
-
 
     context_dict={}
     times = models.Timetable.objects.filter(doctor_id=doctor_id).filter(status=0)
@@ -203,10 +201,11 @@ def user_login(request):
         # user = authenticate(Patients_id=username, patient_psw=password)
         user = models.Patients.objects.get(patient_email=request.POST.get('email'), patient_psw=request.POST.get('password'))
         user1 = models.Patients.objects.filter(patient_email=request.POST.get('email'), patient_psw=request.POST.get('password'))
+        if len(user1)==0:
 
-        if list(user1)==0:
             return render(request,'yd_webapp/login.html',{'Error':'username do not exist'})
         else:
+            user = models.Patients.objects.get(patient_email=request.POST.get('email'), patient_psw=request.POST.get('password'))
             request.session.set_expiry(3000)  #Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
             # login(request,user)
             request.session['is_login'] = True  # 认证为真
@@ -232,19 +231,20 @@ def doc_login(request):
         # user = authenticate(Patients_id=username, patient_psw=password)
         user=models.Doctors.objects.get(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
         user1=models.Doctors.objects.filter(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
+        if len(user1)==0:
 
-        if list(user1)==0:
             return render(request,'yd_webapp/doclogin.html',{'Error':'username do not exist'})
         else:
+            user=models.Doctors.objects.get(doctor_email=request.POST.get('email'),doctor_psw=request.POST.get('password'))
             request.session.set_expiry(3000)  #Session Authentication duration is 3000s. After 3000s, the session authentication becomes invalid
             # login(request,user)
             request.session['username']=request.POST.get('email')   #user的值发送给session里的username
             request.session['is_login']=True   #认证为真
             request.session['user_id'] = user.doctor_id
             request.session['user_name'] = user.doctor_name   #user的值发送给session里的username
-
+            
             request.session['user_email'] = user.doctor_email
-
+            
             # return request.session['is_login']
 
             # return HttpResponse(request.session['is_login'])
