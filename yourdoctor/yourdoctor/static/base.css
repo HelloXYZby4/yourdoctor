@@ -15,9 +15,18 @@
     display: inline-block;
     margin: 5px;
 }
+.form-check-label{
+  font-size: x-large;
+}
+
+.some-space{
+  margin-top: 20%;
+}
 .selected-time{
-  text-align: center;
-  margin: 5px;
+  display: inline;
+}
+.textarea{
+  width: 60%;
 }
 
 .column.side{
