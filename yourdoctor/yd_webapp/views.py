@@ -401,3 +401,7 @@ def show_questions_patient(request):
 def feedback_page(request):
     return render(request, 'yd_webapp/feedback.html')
 
+
+def answer_question():
+    pass
+

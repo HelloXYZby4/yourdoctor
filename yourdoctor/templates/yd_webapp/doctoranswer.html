@@ -1,0 +1,35 @@
+{% extends 'yd_webapp/userbase.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Online Doctor
+{% endblock %}
+
+{% block body_block %}
+<form action='/yd_webapp/onlinedoctor/' method="POST">
+<div class="accordion" id="accordionExample">
+{% for %}
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            这里显示patient的name
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>显示id</strong>
+            这里显示问的问题
+          </div>
+        </div>
+      </div>
+{% endfor %}
+</div>
+<form class="form-inline" role="form" action='/yd_webapp/onlinedoctor/' method="POST">
+<div>
+    <input type="text" class="input-id" id="inputid" placeholder="Please input selected question ID">
+    <input type="text" class="input-answer" id="inputanswer" placeholder="Type in your answer">
+
+<button type="submit">Submit</button>
+</div>
+</form>
+{% endblock %}
