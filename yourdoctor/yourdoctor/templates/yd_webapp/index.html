@@ -1,23 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
+{% load staticfiles %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>index</title>
-</head>
-<body>
-<h1>homepage</h1>
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'icon/hospital.png' %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "homepage.css" %}">
 
+    <title>
+        YourDoctor - Homepage
+    </title>
+  </head>
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1>YourDoctor</h1>      
+          <p>Sign in to book and ask.</p>
+        </div>
+      </div>
+
+<div class="text-center">
 {% if request.session.is_login %}
-    Welcome！ {{ request.session.username }}!
-    <a href="/yd_webapp/patient/">To the user Account</a>
-    <a href="{% url 'yd_webapp:logout' %}">logout</a>
+    <h1>Welcome！ {{ request.session.username }}! </h1>
+    <a class="link button" href="/yd_webapp/patient/">To the user Account</a>
+    <a class="link button" href="{% url 'yd_webapp:logout' %}">logout</a>
     
 {% else %}
-    <a href="{% url 'yd_webapp:login' %}">Patient Login</a>
-    <a href="{% url 'yd_webapp:doclogin' %}">Doctor Login</a>
-    <a href="{% url 'yd_webapp:register' %}">Sign up</a>
+    <a class="link button" href="{% url 'yd_webapp:login' %}">Patient Login</a>
+    <a class="link button" href="{% url 'yd_webapp:doclogin' %}">Doctor Login</a>
+    <a class="link button" href="{% url 'yd_webapp:register' %}">Sign up</a>
 
 {% endif %}
-    
+    <script src="{% static "js1/jquery-3.3.1.min.js" %}" crossorigin="anonymous"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+</div>
 </body>
 </html>

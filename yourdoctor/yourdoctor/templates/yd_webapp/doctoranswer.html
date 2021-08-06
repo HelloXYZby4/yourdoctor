@@ -17,7 +17,7 @@
 <form action='/yd_webapp/onlinedoctor/' method="POST">
  {% csrf_token %}
 
-<div class="accordion" id="accordionExample">
+<div class="accordion text-center" id="accordionExample">
 {% for q in questions%}
     <div class="accordion-item">
         <h5 class="accordion-header" id="headingOne">
@@ -34,21 +34,25 @@
 </div>
 
 <br/><br/><br/>
+<div class="text-center">
 <form class="form-inline" role="form" action='/yd_webapp/onlinedoctor/' method="POST">
  {% csrf_token %}
     <div>
-    <h4>
+    <h3>
         Answer Questions:
-    </h4>
+    </h3>
     Please input the Question Number that your will reply to:
+    <!--textarea class="form-control" rows="5" id="comment" name="question_id"></textarea-->
     <input type="text" class="input-id" name='question_id' id="inputid" placeholder="">
     <br/><br/><br/>
-    Please answer this question here:
-    <input type="text" class="input-answer" name='answer' id="inputanswer" placeholder="Your answer">
+    <h5> answer this question here:</h5>
+    <textarea class="textarea" rows="5" id="inputanswer" name="answer" placeholder="Your answer"></textarea>
+    <!--input type="text" class="input-answer" name='answer' id="inputanswer" placeholder="Your answer"-->
     <br/><br/><br/>
 <button type="submit">Submit</button>
 </div>
 </form>
 <br/>
 <li><a href="/yd_webapp/doctor">Back to the HomePage</a></li>
+</div>
 {% endblock %}

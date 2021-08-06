@@ -3,8 +3,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>login</title>
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
     <link rel="stylesheet" href="{% static "login.css" %}">
+    <title>login</title>
+    
 </head>
 <body>
     {% if messages %}
@@ -29,11 +31,14 @@
                 <input type="password" id="id_password" placeholder="password" name="password" required >
             </p>
             <button type="submit" >Log In</button>
+            <a href="/yd_webapp/" class="btn" role="button">Homepage</a>
 
             <h6> A new patient? Don't worry! Register to our website. </h6>
             <li><a href="/yd_webapp/register">Register Now</a></li>
 
         </form>
     </div>
+    <script src="{% static "js1/jquery-3.3.1.min.js" %}" crossorigin="anonymous"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
 </body>
 </html>
