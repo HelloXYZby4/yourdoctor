@@ -7,7 +7,7 @@
 
 {% block body_block %}
 
-<form action='/yd_webapp/edittime/' method="POST">
+<form class="text-center" action='/yd_webapp/edittime/' method="POST">
     {% csrf_token %}
 
     <div class="form-check">
@@ -36,13 +36,13 @@
 
 
 
-{#    <div class="selected-time">#}
+<div class="text-center">
     <div>
-        <h3>SELECTED TIME</h3>
+        <h4 class="some-space">SELECTED TIME</h4>
     {% if timetable %}
         <ul>
         {% for time in timetable%}
-        <li><h4>{{ time }}</h4></li>
+        <h5 class="selected-time">{{ time }}</h5>
         {% endfor %}
         </ul>
     {% else %}
@@ -50,7 +50,7 @@
     {% endif %}
     </div>
 
-     <li><a href="/yd_webapp/doctor">Back to the HomePage</a></li>
-
+     <a class="link button" href="/yd_webapp/doctor">Back to the HomePage</a>
+</div>
 
 {% endblock %}
